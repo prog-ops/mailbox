@@ -1,6 +1,7 @@
 import React from 'react';
 import {format} from 'date-fns';
 import type {InboxItem} from "../../../types/inbox.ts";
+import { Link } from 'react-router-dom';
 
 const Avatar: React.FC<{ owner: InboxItem['owner'] }> = ({owner}) => {
     if (owner.picture) {
@@ -28,6 +29,8 @@ interface InboxListItemProps {
 
 const InboxListItem: React.FC<InboxListItemProps> = ({item}) => {
     return (
+        <Link to={`/conversation/${item.id}`}>
+
         <div className="flex gap-x-3 p-4 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
             {/* Kolom Avatar */}
             <Avatar owner={item.owner}/>
@@ -49,6 +52,7 @@ const InboxListItem: React.FC<InboxListItemProps> = ({item}) => {
                 {!item.read && <div className="w-2 h-2 bg-red-500 rounded-full"></div>}
             </div>
         </div>
+        </Link>
     );
 };
 
