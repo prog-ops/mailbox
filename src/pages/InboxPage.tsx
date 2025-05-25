@@ -1,6 +1,6 @@
 import FloatingActions from "../components/FloatingActions.tsx";
 import {useState} from "react";
-import InboxContent from "../features/inbox/InboxContent.tsx";
+import InboxContent from "../features/inbox/components/InboxContent.tsx";
 import MainLayout from "../layouts/MainLayout.tsx";
 import CircularProgress from '@mui/material/CircularProgress';
 
