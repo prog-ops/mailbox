@@ -14,3 +14,11 @@ export interface InboxItem {
     subject?: string;
     read: boolean;
 }
+
+// Conversation detail
+export interface CommentItem {
+    id: string;
+    message: string;
+    publishDate: string;
+    owner: InboxItemOwner;
+}
