@@ -14,12 +14,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     return (
         <div className="bg-[#313338] text-white h-screen w-screen flex flex-col overflow-hidden">
             <Header />
-            <div className="flex flex-grow relative"> {/* 'relative' for FAB */}
+            <div className="flex flex-grow relative min-h-0">
                 <Sidebar />
-                <main className="flex-grow bg-[#282c34] relative">
+                <main className="flex-grow bg-[#282c34] relative min-h-0">
                     {children}
                 </main>
-                {/* Always-On-Top FAB */}
                 <FloatingActions
                     onInboxClick={() => setView('inbox')}
                     onTaskClick={() => setView('tasks')}
