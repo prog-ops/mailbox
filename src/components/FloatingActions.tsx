@@ -14,7 +14,7 @@ const FloatingActions: React.FC<FloatingActionsProps> = ({ onInboxClick, onTaskC
 
     return (
         <div
-            className="absolute bottom-8 right-8 flex items-center gap-x-4"
+            className="absolute bottom-8 right-8 flex items-center gap-x-4 z-20"
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
