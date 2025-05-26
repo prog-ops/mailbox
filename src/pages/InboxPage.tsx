@@ -1,54 +1,22 @@
-import FloatingActions from "../components/FloatingActions.tsx";
-import {useState} from "react";
 import InboxContent from "../features/inbox/components/InboxContent.tsx";
 import MainLayout from "../layouts/MainLayout.tsx";
-import CircularProgress from '@mui/material/CircularProgress';
-
-type PageStatus = 'idle' | 'loading' | 'success';
+import { Outlet } from 'react-router-dom';
+import { useView } from "../context/ViewContext.tsx";
 
 const InboxPage = () => {
-    const [status, setStatus] = useState<PageStatus>('idle');
-
-    const handleInboxClick = () => {
-        setStatus('loading');
-
-        setTimeout(() => {
-            setStatus('success');
-        }, 1500);
-    };
-
-    const handleTaskClick = () => {
-        console.log('Task clicked');
-    };
-
-    const renderContent = () => {
-        switch (status) {
-            case 'loading':
-                return (
-                    <div className="flex flex-col items-center justify-center h-full text-gray-400 gap-y-4">
-                        <CircularProgress color="inherit" />
-                        <span>Loading Chats ...</span>
-                    </div>
-                );
-            case 'success':
-                return <InboxContent />;
-            case 'idle':
-            default:
-                return (
-                    <div className="flex items-center justify-center h-full text-gray-500">
-                        Pilih tindakan di tombol bawah kanan.
-                    </div>
-                );
-        }
-    };
+    const { view } = useView();
 
     return (
         <MainLayout>
-            {renderContent()}
+            {/* Tampilkan InboxContent jika view adalah 'inbox' */}
+            {view === 'inbox' && <InboxContent />}
 
-            <FloatingActions onInboxClick={handleInboxClick} onTaskClick={handleTaskClick} />
+            {/* Jika view adalah 'tasks', tampilkan komponen Task di sini */}
+            {view === 'tasks' && <div className="p-4">Tasks View Coming Soon...</div>}
+
+            {/* Outlet akan merender ConversationPage saat URL cocok */}
+            <Outlet />
         </MainLayout>
     );
 };
-
 export default InboxPage;
