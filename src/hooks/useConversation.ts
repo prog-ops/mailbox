@@ -1,7 +1,7 @@
 import type {CommentItem, InboxItem} from "../types/inbox.ts";
 import {useQuery} from "@tanstack/react-query";
 
-const APP_ID = '68315676b43cb9e04e38ea1e';
+const APP_ID = import.meta.env.VITE_DUMMYAPI_APP_ID
 
 /**
  * Hook untuk mengambil detail percakapan (post dan komentar) berdasarkan postId

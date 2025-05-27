@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import type {InboxItem} from "../types/inbox.ts";
 
 // Ganti dengan App ID Anda yang didapat dari dummyapi.io
-const APP_ID = '68315676b43cb9e04e38ea1e';
+const APP_ID = import.meta.env.VITE_DUMMYAPI_APP_ID
 
 const fetchInboxItems = async () => {
     const response = await fetch('https://dummyapi.io/data/v1/post?limit=20', {
