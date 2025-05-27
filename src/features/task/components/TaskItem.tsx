@@ -12,10 +12,10 @@ interface TaskItemProps {
     task: TaskItemType;
     isExpanded: boolean;
     onToggle: () => void;
+    onCheck: (checked: boolean) => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle }) => {
-    const [isChecked, setIsChecked] = useState(task.completed);
+const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck }) => {
     const [description, setDescription] = useState('No Description');
     const [dueDate, setDueDate] = useState(dayjs(task.dueDate));
 
@@ -26,11 +26,11 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle }) => {
             {/* Bagian yang selalu terlihat (Collapsed View) */}
             <div className="flex items-center gap-x-2 p-2">
                 <Checkbox
-                    checked={isChecked}
-                    onChange={(e) => setIsChecked(e.target.checked)}
+                    checked={task.completed}
+                    onChange={(e) => onCheck(e.target.checked)}
                     sx={{ color: 'white', '&.Mui-checked': { color: '#68D391' } }}
                 />
-                <span className={`flex-grow ${isChecked ? 'line-through text-gray-500' : ''}`}>{task.title}</span>
+                <span className={`flex-grow ${task.completed ? 'line-through text-gray-500' : ''}`}>{task.title}</span>
                 <div className="flex items-center gap-x-3 text-sm flex-shrink-0">
                     {daysLeft > 0 && daysLeft < 15 && <span className="text-red-500 font-semibold">{daysLeft} Days Left</span>}
                     <span>{dueDate.format('DD/MM/YYYY')}</span>
