@@ -5,4 +5,5 @@ export interface TaskItem {
     completed: boolean;
     dueDate: string;
     label?: 'personal' | 'urgent';
+    description?: string;
 }
