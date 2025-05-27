@@ -3,5 +3,6 @@ export interface TaskItem {
     userId: number;
     title: string;
     completed: boolean;
-    dueDate: string; // Kita akan tambahkan ini secara manual
+    dueDate: string;
+    label?: 'personal' | 'urgent';
 }
