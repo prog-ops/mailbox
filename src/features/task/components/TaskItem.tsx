@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import type {TaskItem as TaskItemType} from '../../../types/task.ts';
 import dayjs from 'dayjs';
-import { Checkbox, IconButton, TextField, Menu, MenuItem } from '@mui/material';
+import { Checkbox, IconButton, Menu, MenuItem } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import EditIcon from '@mui/icons-material/Edit';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
