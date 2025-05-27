@@ -6,7 +6,7 @@ import FloatingActions from "../components/FloatingActions.tsx";
 import TasksView from "../features/task/components/TasksView.tsx";
 
 const InboxPage = () => {
-    const { view } = useView();
+    const { view, setView } = useView();
 
     return (
         <>
@@ -21,8 +21,8 @@ const InboxPage = () => {
                 <Outlet />
             </MainLayout>
             <FloatingActions
-                onInboxClick={() => {}}
-                onTaskClick={() => {}}
+                onInboxClick={() => setView('inbox')}
+                onTaskClick={() => setView('tasks')}
             />
         </>
     );
