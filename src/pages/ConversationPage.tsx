@@ -106,6 +106,17 @@ const ConversationPage = () => {
         }
     };
 
+    // Handler to send a new message // Mine
+    const handleSendMessage = (msg: string) => {
+        const newComment: CommentItem = {
+            id: `msg-${Date.now()}`,
+            message: msg,
+            publishDate: new Date().toISOString(),
+            owner: post?.owner || { id: 'me', firstName: 'Me', lastName: '', picture: '' },
+        };
+        setLiveComments(prev => [...prev, newComment]);
+    };
+
     // 4. RENDER LOGIC
     // Tampilan saat data masih dimuat oleh React Query
     if (isLoading) {
@@ -153,7 +164,7 @@ const ConversationPage = () => {
 
                 {newMessagesCount > 0 && <NewMessageButton count={newMessagesCount} onClick={scrollToBottom} />}
 
-                <MessageInput />
+                <MessageInput onSend={handleSendMessage} />
             </div>
         </div>
     );
