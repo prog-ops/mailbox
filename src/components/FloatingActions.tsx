@@ -24,7 +24,7 @@ const FloatingActions: React.FC<FloatingActionsProps> = ({ onInboxClick, onTaskC
                     {/* Task button */}
                     <div className="flex flex-col items-center">
                         <span className="text-sm text-gray-400 mb-1">Task</span>
-                        <IconButton className="bg-white hover:bg-gray-200">
+                        <IconButton className="bg-white hover:bg-gray-200" onClick={onTaskClick}>
                             <TaskIcon sx={{ color: '#E59B4E' }} />
                         </IconButton>
                     </div>
