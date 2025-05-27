@@ -14,7 +14,13 @@ const TasksView = () => {
     const [newLabel, setNewLabel] = useState('personal');
 
     useEffect(() => {
-        if (tasks) setLocalTasks(tasks);
+        if (tasks) {
+            const sorted = [
+                ...tasks.filter(t => !t.completed),
+                ...tasks.filter(t => t.completed)
+            ];
+            setLocalTasks(sorted);
+        }
     }, [tasks]);
 
     const handleToggle = (taskId: number) => {
