@@ -57,6 +57,14 @@ const TasksView = () => {
         setNewDescription('');
     };
 
+    // Mine: filter tasks by label
+    let filteredTasks = localTasks;
+    if (taskListType === 'personal') {
+        filteredTasks = localTasks.filter(t => t.label === 'personal');
+    } else if (taskListType === 'urgent') {
+        filteredTasks = localTasks.filter(t => t.label === 'urgent');
+    }
+
     if (isLoading) return <div className="flex justify-center p-8"><CircularProgress /></div>;
     if (error) return <div className="p-4 text-red-500">Error loading tasks: {error.message}</div>;
 
@@ -117,7 +125,7 @@ const TasksView = () => {
             </Dialog>
             <h1 className="text-xl font-bold mb-4">Tasks</h1>
             <div>
-                {localTasks.map(task => (
+                {filteredTasks.map(task => (
                     <TaskItem
                         key={task.id}
                         task={task}
