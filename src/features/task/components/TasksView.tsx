@@ -12,6 +12,7 @@ const TasksView = () => {
     const [open, setOpen] = useState(false);
     const [newTitle, setNewTitle] = useState('');
     const [newLabel, setNewLabel] = useState('personal');
+    const [newDescription, setNewDescription] = useState('');
 
     useEffect(() => {
         if (tasks) {
@@ -47,11 +48,13 @@ const TasksView = () => {
             completed: false,
             dueDate: new Date().toISOString(),
             label: newLabel as 'personal' | 'urgent',
+            description: newDescription,
         };
         setLocalTasks(prev => [newTask, ...prev]);
         setOpen(false);
         setNewTitle('');
         setNewLabel('personal');
+        setNewDescription('');
     };
 
     if (isLoading) return <div className="flex justify-center p-8"><CircularProgress /></div>;
@@ -86,6 +89,14 @@ const TasksView = () => {
                         value={newTitle}
                         onChange={e => setNewTitle(e.target.value)}
                     />
+                    <TextField
+                        margin="dense"
+                        label="Description"
+                        type="text"
+                        fullWidth
+                        value={newDescription}
+                        onChange={e => setNewDescription(e.target.value)}
+                    />
                     <FormControl fullWidth margin="dense">
                         <InputLabel id="label-select-label">Label</InputLabel>
                         <Select
@@ -113,6 +124,8 @@ const TasksView = () => {
                         isExpanded={expandedId === task.id}
                         onToggle={() => handleToggle(task.id)}
                         onCheck={checked => handleCheck(task.id, checked)}
+                        onDelete={() => setLocalTasks(prev => prev.filter(t => t.id !== task.id))}
+                        onEdit={(title, description) => setLocalTasks(prev => prev.map(t => t.id === task.id ? { ...t, title, description } : t))}
                     />
                 ))}
             </div>
