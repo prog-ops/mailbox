@@ -34,7 +34,7 @@ const ConversationPage = () => {
     const [newMessagesCount, setNewMessagesCount] = useState(0);
     const [firstUnreadId, setFirstUnreadId] = useState<string | null>(null);
     // State untuk transisi slide-in
-    const [isVisible, setIsVisible] = useState(false);
+    const [, setIsVisible] = useState(false);
     // State for reply
     const [replyTo, setReplyTo] = useState<CommentItem | null>(null);
 

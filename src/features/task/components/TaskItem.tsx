@@ -131,8 +131,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                             onClick={() => setEditingField('description')}
                             tabIndex={0}
                         >
-                            {task.description || 'No Description'}
                             <EditIcon fontSize="small" sx={{ color: '#2F80ED' }} />
+                            {task.description || 'No Description'}
                         </div>
                     )}
                 </div>
