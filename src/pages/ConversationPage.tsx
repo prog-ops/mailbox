@@ -172,7 +172,7 @@ const ConversationPage = () => {
                         }
                         return (
                             <Fragment key={comment.id}>
-                                {comment.id === firstUnreadId && <NewMessageSeparator />}
+                                {comment.id === firstUnreadId && <NewMessageSeparator isAtBottom={isAtBottom} />}
                                 <MessageBubble
                                     comment={comment}
                                     isMe={comment.owner.id === currentUserId}
@@ -185,7 +185,7 @@ const ConversationPage = () => {
                     })}
                 </div>
 
-                {newMessagesCount > 0 && <NewMessageButton count={newMessagesCount} onClick={scrollToBottom} />}
+                {newMessagesCount > 0 && <NewMessageButton count={newMessagesCount} onClick={scrollToBottom} isAtBottom={isAtBottom} />}
 
                 {/* Reply UI above input */}
                 {replyTo && (
