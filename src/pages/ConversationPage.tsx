@@ -7,7 +7,8 @@ import {useRef, useState, useEffect, Fragment} from "react";
 import type {CommentItem} from "../types/inbox.ts";
 import NewMessageButton from "../features/inbox/components/NewMessageButton.tsx";
 import NewMessageSeparator from "../features/inbox/components/NewMessageSeparator.tsx";
-import {CircularProgress} from "@mui/material";
+import {CircularProgress, IconButton} from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 /**
  * ConversationPage component displays a single conversation
@@ -34,6 +35,8 @@ const ConversationPage = () => {
     const [firstUnreadId, setFirstUnreadId] = useState<string | null>(null);
     // State untuk transisi slide-in
     const [isVisible, setIsVisible] = useState(false);
+    // State for reply
+    const [replyTo, setReplyTo] = useState<CommentItem | null>(null);
 
     // Ref untuk mengakses DOM dari kontainer scroll
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -106,15 +109,22 @@ const ConversationPage = () => {
         }
     };
 
-    // Handler to send a new message // Mine
+    // Handler to send a new message
     const handleSendMessage = (msg: string) => {
         const newComment: CommentItem = {
             id: `msg-${Date.now()}`,
             message: msg,
             publishDate: new Date().toISOString(),
             owner: post?.owner || { id: 'me', firstName: 'Me', lastName: '', picture: '' },
+            replyTo: replyTo ? replyTo.id : undefined,
         };
         setLiveComments(prev => [...prev, newComment]);
+        setReplyTo(null);
+    };
+
+    // Handler for reply
+    const handleReply = (comment: CommentItem) => {
+        setReplyTo(comment);
     };
 
     // 4. RENDER LOGIC
@@ -151,19 +161,42 @@ const ConversationPage = () => {
                     ref={scrollContainerRef}
                     onScroll={handleScroll}
                 >
-                    {liveComments.map(comment => (
-                        <Fragment key={comment.id}>
-                            {comment.id === firstUnreadId && <NewMessageSeparator />}
-                            <MessageBubble
-                                comment={comment}
-                                isMe={comment.owner.id === currentUserId}
-                            />
-                        </Fragment>
-                    ))}
+                    {liveComments.map(comment => {
+                        let replyToSender, replyToMessage;
+                        if (comment.replyTo) {
+                            const original = liveComments.find(c => c.id === comment.replyTo);
+                            if (original) {
+                                replyToSender = `${original.owner.firstName} ${original.owner.lastName}`;
+                                replyToMessage = original.message;
+                            }
+                        }
+                        return (
+                            <Fragment key={comment.id}>
+                                {comment.id === firstUnreadId && <NewMessageSeparator />}
+                                <MessageBubble
+                                    comment={comment}
+                                    isMe={comment.owner.id === currentUserId}
+                                    onReply={handleReply}
+                                    replyToSender={replyToSender}
+                                    replyToMessage={replyToMessage}
+                                />
+                            </Fragment>
+                        );
+                    })}
                 </div>
 
                 {newMessagesCount > 0 && <NewMessageButton count={newMessagesCount} onClick={scrollToBottom} />}
 
+                {/* Reply UI above input */}
+                {replyTo && (
+                    <div className="flex items-center bg-gray-800 text-white px-4 py-2 rounded-t-lg border-b border-gray-700">
+                        <div className="flex-1">
+                            <span className="text-xs text-gray-400">Replying to {replyTo.owner.firstName} {replyTo.owner.lastName}</span>
+                            <div className="text-sm text-gray-200 truncate">{replyTo.message}</div>
+                        </div>
+                        <IconButton size="small" onClick={() => setReplyTo(null)}><CloseIcon /></IconButton>
+                    </div>
+                )}
                 <MessageInput onSend={handleSendMessage} />
             </div>
         </div>

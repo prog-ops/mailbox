@@ -21,4 +21,5 @@ export interface CommentItem {
     message: string;
     publishDate: string;
     owner: InboxItemOwner;
+    replyTo?: string; // Mine
 }
