@@ -39,7 +39,11 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ comment, isMe, onReply, r
 
     return (
         <div className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
-            <span className={nameClasses}>{senderName}</span>
+            {isMe ? (
+                <span className="text-[#9B51E0] font-semibold mb-1 text-sm text-right w-full block">You</span>
+            ) : (
+                <span className={nameClasses}>{senderName}</span>
+            )}
             <div className={`relative p-3 rounded-lg max-w-lg ${bubbleClasses}`}>
                 {replyToMessage && (
                     <div className="mb-2 p-2 rounded bg-gray-100 text-xs text-gray-700 border-l-4 border-blue-400">

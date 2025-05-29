@@ -69,15 +69,15 @@ const TasksView = () => {
     if (error) return <div className="p-4 text-red-500">Error loading tasks: {error.message}</div>;
 
     return (
-        <div className="p-4 h-full overflow-y-auto">
+        <div className="p-4 h-full overflow-y-auto bg-white text-[#4F4F4F]">
             <div className="flex items-center justify-between mb-4">
                 <Select
                     value={taskListType}
                     onChange={e => setTaskListType(e.target.value)}
                     variant="outlined"
                     size="small"
-                    className="bg-[#282c34] text-white"
-                    sx={{ minWidth: 180, '.MuiOutlinedInput-notchedOutline': { borderColor: '#4A5568' }, color: 'white' }}
+                    className="bg-white text-[#4F4F4F]"
+                    sx={{ minWidth: 180, '.MuiOutlinedInput-notchedOutline': { borderColor: '#4A5568' }, color: '#4F4F4F', backgroundColor: 'white' }}
                 >
                     <MenuItem value="my">My Tasks</MenuItem>
                     <MenuItem value="personal">Personal Errands</MenuItem>

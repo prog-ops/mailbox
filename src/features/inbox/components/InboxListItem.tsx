@@ -31,20 +31,20 @@ const InboxListItem: React.FC<InboxListItemProps> = ({item}) => {
     return (
         <Link to={`/conversation/${item.id}`}>
 
-        <div className="flex gap-x-3 p-4 border-b border-gray-700 hover:bg-gray-800 cursor-pointer">
+        <div className="flex gap-x-3 p-4 border-b border-gray-200 hover:bg-gray-100 cursor-pointer">
             {/* Kolom Avatar */}
             <Avatar owner={item.owner}/>
 
             {/* Kolom Konten Pesan */}
             <div className="flex-grow">
                 <div className="flex justify-between items-start">
-                    <span className="text-blue-400 font-semibold">{item.subject}</span>
+                    <span className="text-[#2F80ED] font-semibold">{item.subject}</span>
                     <span className="text-xs text-gray-500 flex-shrink-0 ml-4">
             {format(new Date(item.publishDate), 'MM/dd/yyyy HH:mm')}
           </span>
                 </div>
-                <p className="font-semibold text-white">{`${item.owner.firstName} ${item.owner.lastName}`}</p>
-                <p className="text-gray-400 text-sm truncate">{item.text}</p>
+                <p className="font-semibold text-[#4F4F4F]">{`${item.owner.firstName} ${item.owner.lastName}`}</p>
+                <p className="text-[#828282] text-sm truncate">{item.text}</p>
             </div>
 
             {/* Kolom Indikator Belum Dibaca */}

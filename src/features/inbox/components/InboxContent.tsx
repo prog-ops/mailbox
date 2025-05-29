@@ -32,12 +32,12 @@ const InboxContent = () => {
     return (
         <div className="h-full overflow-y-auto">
             {/* Search Bar */}
-            <div className="p-4 border-b border-gray-600 sticky top-0 bg-[#282c34]">
+            <div className="p-4 border-b border-gray-200 sticky top-0 bg-white">
                 <div className="relative w-full">
                     <input
                         type="text"
                         placeholder="Search"
-                        className="w-full bg-[#3c4043] border border-gray-500 rounded-lg py-2 pl-4 pr-10 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full bg-white border border-gray-300 rounded-lg py-2 pl-4 pr-10 text-[#4F4F4F] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                         <SearchIcon className="text-gray-400" />

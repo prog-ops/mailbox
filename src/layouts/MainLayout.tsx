@@ -12,11 +12,11 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     const { setView } = useView();
 
     return (
-        <div className="bg-[#313338] text-white h-screen w-screen flex flex-col overflow-hidden">
+        <div className="bg-white h-screen w-screen flex flex-col overflow-hidden">
             <Header />
             <div className="flex flex-grow relative min-h-0">
                 <Sidebar />
-                <main className="flex-grow bg-[#282c34] relative min-h-0">
+                <main className="flex-grow bg-white relative min-h-0">
                     {children}
                 </main>
                 <FloatingActions

@@ -66,7 +66,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                         />
                     ) : (
                         <span
-                            className={`font-bold cursor-pointer block ${task.completed ? 'line-through text-gray-500' : 'text-white'}`}
+                            className={`font-bold cursor-pointer block ${task.completed ? 'line-through text-gray-500' : 'text-[#4F4F4F]'}`}
                             onClick={() => setEditingField('title')}
                             tabIndex={0}
                         >
@@ -117,7 +117,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                     </div>
                     {editingField === 'description' && isExpanded ? (
                         <input
-                            className="bg-transparent border-b border-gray-400 text-gray-300 outline-none w-full text-sm mt-2"
+                            className="bg-transparent border-b border-gray-400 text-[#828282] outline-none w-full text-sm mt-2"
                             value={editDescription}
                             onChange={e => setEditDescription(e.target.value)}
                             onBlur={saveEdit}
@@ -126,7 +126,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                         />
                     ) : (
                         <div
-                            className="text-gray-400 text-sm mt-2 cursor-pointer"
+                            className="text-[#828282] text-sm mt-2 cursor-pointer"
                             onClick={() => setEditingField('description')}
                             tabIndex={0}
                         >
