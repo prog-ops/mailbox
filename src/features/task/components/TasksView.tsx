@@ -4,6 +4,17 @@ import { CircularProgress, MenuItem, Select, Button, Dialog, DialogTitle, Dialog
 import useTasks from "../../../hooks/useTasks.ts";
 import type { TaskItem as TaskItemType } from '../../../types/task.ts';
 
+const TAG_OPTIONS = [
+    { label: 'Important ASAP', value: 'important', color: 'bg-[#EAF1FB] text-[#333]' },
+    { label: 'Offline Meeting', value: 'offline', color: 'bg-[#FDE7D6] text-[#333]' },
+    { label: 'Virtual Meeting', value: 'virtual', color: 'bg-[#FFF4D6] text-[#333]' },
+    { label: 'ASAP', value: 'asap', color: 'bg-[#D6F5F2] text-[#333]' },
+    { label: 'Client Related', value: 'client', color: 'bg-[#D6F5E6] text-[#333]' },
+    { label: 'Self Task', value: 'self', color: 'bg-[#E6E6FA] text-[#333]' },
+    { label: 'Appointments', value: 'appointments', color: 'bg-[#F6E6FA] text-[#333]' },
+    { label: 'Court Related', value: 'court', color: 'bg-[#D6E6F5] text-[#333]' },
+];
+
 const TasksView = () => {
     const { data: tasks, isLoading, error } = useTasks();
     const [expandedId, setExpandedId] = useState<number | null>(null);
@@ -13,6 +24,7 @@ const TasksView = () => {
     const [newTitle, setNewTitle] = useState('');
     const [newLabel, setNewLabel] = useState('personal');
     const [newDescription, setNewDescription] = useState('');
+    const [newTags, setNewTags] = useState<string[]>([]);
 
     useEffect(() => {
         if (tasks) {
@@ -49,12 +61,14 @@ const TasksView = () => {
             dueDate: new Date().toISOString(),
             label: newLabel as 'personal' | 'urgent',
             description: newDescription,
+            tags: newTags,
         };
         setLocalTasks(prev => [newTask, ...prev]);
         setOpen(false);
         setNewTitle('');
         setNewLabel('personal');
         setNewDescription('');
+        setNewTags([]);
     };
 
     // Mine: filter tasks by label
@@ -105,6 +119,18 @@ const TasksView = () => {
                         value={newDescription}
                         onChange={e => setNewDescription(e.target.value)}
                     />
+                    <div className="flex flex-wrap gap-2 my-2 p-2 rounded bg-[#F8F9FB]">
+                        {TAG_OPTIONS.map(tag => (
+                            <button
+                                key={tag.value}
+                                type="button"
+                                className={`px-3 py-1 rounded font-medium text-sm border-2 outline-none ${tag.color} ${newTags.includes(tag.value) ? 'border-[#2F80ED]' : 'border-transparent'} hover:border-[#2F80ED]'}`}
+                                onClick={() => setNewTags(tags => tags.includes(tag.value) ? tags.filter(t => t !== tag.value) : [...tags, tag.value])}
+                            >
+                                {tag.label}
+                            </button>
+                        ))}
+                    </div>
                     <FormControl fullWidth margin="dense">
                         <InputLabel id="label-select-label">Label</InputLabel>
                         <Select

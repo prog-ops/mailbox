@@ -6,4 +6,5 @@ export interface TaskItem {
     dueDate: string;
     label?: 'personal' | 'urgent';
     description?: string;
+    tags?: string[];
 }

@@ -7,6 +7,8 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import EditIcon from '@mui/icons-material/Edit';
+import BookmarkIcon from '@mui/icons-material/Bookmark';
+import Dialog from '@mui/material/Dialog';
 
 interface TaskItemProps {
     task: TaskItemType;
@@ -16,6 +18,17 @@ interface TaskItemProps {
     onDelete?: () => void;
     onEdit?: (title: string, description: string) => void;
 }
+
+const TAG_OPTIONS = [
+    { label: 'Important ASAP', value: 'important', color: 'bg-[#EAF1FB] text-[#333]' },
+    { label: 'Offline Meeting', value: 'offline', color: 'bg-[#FDE7D6] text-[#333]' },
+    { label: 'Virtual Meeting', value: 'virtual', color: 'bg-[#FFF4D6] text-[#333]' },
+    { label: 'ASAP', value: 'asap', color: 'bg-[#D6F5F2] text-[#333]' },
+    { label: 'Client Related', value: 'client', color: 'bg-[#D6F5E6] text-[#333]' },
+    { label: 'Self Task', value: 'self', color: 'bg-[#E6E6FA] text-[#333]' },
+    { label: 'Appointments', value: 'appointments', color: 'bg-[#F6E6FA] text-[#333]' },
+    { label: 'Court Related', value: 'court', color: 'bg-[#D6E6F5] text-[#333]' },
+];
 
 const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck, onDelete, onEdit }) => {
     const [editingField, setEditingField] = useState<null | 'title' | 'description'>(null);
@@ -45,6 +58,8 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
     };
 
     const daysLeft = dayjs(dueDate).diff(dayjs(), 'day');
+
+    const [tagDialogOpen, setTagDialogOpen] = useState(false);
 
     return (
         <div className="border-b border-gray-600 py-2">
@@ -135,6 +150,54 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                             {task.description || 'No Description'}
                         </div>
                     )}
+                    <div className="flex items-center gap-x-2 bg-[#F8F9FB] rounded px-3 py-2 mt-2">
+                        <BookmarkIcon sx={{ color: '#2F80ED' }} />
+                        <div className="flex gap-x-2 flex-wrap">
+                            {(task.tags ?? []).map(tagValue => {
+                                const tag = TAG_OPTIONS.find(t => t.value === tagValue);
+                                if (!tag) return null;
+                                return (
+                                    <button
+                                        key={tag.value}
+                                        className={`px-3 py-1 rounded font-medium text-sm border-none outline-none ${tag.color}`}
+                                        onClick={() => setTagDialogOpen(true)}
+                                    >
+                                        {tag.label}
+                                    </button>
+                                );
+                            })}
+                            {(task.tags ?? []).length === 0 && (
+                                <button
+                                    className="px-3 py-1 rounded font-medium text-sm border-none outline-none bg-[#EAF1FB] text-[#333]"
+                                    onClick={() => setTagDialogOpen(true)}
+                                >
+                                    + Add Tag
+                                </button>
+                            )}
+                        </div>
+                        <Dialog open={tagDialogOpen} onClose={() => setTagDialogOpen(false)}>
+                            <div className="bg-white rounded shadow-lg p-4 min-w-[220px] border border-gray-200">
+                                <div className="font-semibold mb-2 text-[#2F80ED]">Select Tags</div>
+                                {TAG_OPTIONS.map(tag => (
+                                    <button
+                                        key={tag.value}
+                                        className={`block w-full text-left px-3 py-2 rounded font-medium text-sm mb-1 ${tag.color} ${(task.tags ?? []).includes(tag.value) ? 'border-2 border-[#2F80ED]' : 'border-2 border-transparent'} hover:border-[#2F80ED]'}`}
+                                        onClick={() => {
+                                            if (!task.tags) task.tags = [];
+                                            if (task.tags.includes(tag.value)) {
+                                                task.tags = task.tags.filter(t => t !== tag.value);
+                                            } else {
+                                                task.tags = [...task.tags, tag.value];
+                                            }
+                                            if (onEdit) onEdit(editTitle, editDescription);
+                                        }}
+                                    >
+                                        {tag.label}
+                                    </button>
+                                ))}
+                            </div>
+                        </Dialog>
+                    </div>
                 </div>
             )}
         </div>
