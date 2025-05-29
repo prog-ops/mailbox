@@ -17,7 +17,7 @@ const TAG_OPTIONS = [
 
 const TasksView = () => {
     const { data: tasks, isLoading, error } = useTasks();
-    const [expandedId, setExpandedId] = useState<number | null>(null);
+    const [expandedIds, setExpandedIds] = useState<number[]>([]);
     const [localTasks, setLocalTasks] = useState<TaskItemType[]>([]);
     const [taskListType, setTaskListType] = useState('my');
     const [open, setOpen] = useState(false);
@@ -37,7 +37,7 @@ const TasksView = () => {
     }, [tasks]);
 
     const handleToggle = (taskId: number) => {
-        setExpandedId(prevId => (prevId === taskId ? null : taskId));
+        setExpandedIds(prev => prev.includes(taskId) ? prev.filter(id => id !== taskId) : [...prev, taskId]);
     };
 
     const handleCheck = (taskId: number, checked: boolean) => {
@@ -155,7 +155,7 @@ const TasksView = () => {
                     <TaskItem
                         key={task.id}
                         task={task}
-                        isExpanded={expandedId === task.id}
+                        isExpanded={expandedIds.includes(task.id)}
                         onToggle={() => handleToggle(task.id)}
                         onCheck={checked => handleCheck(task.id, checked)}
                         onDelete={() => setLocalTasks(prev => prev.filter(t => t.id !== task.id))}

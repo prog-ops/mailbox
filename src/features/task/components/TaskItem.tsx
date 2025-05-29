@@ -120,7 +120,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
             {/* Bagian yang bisa diexpand (Expanded View) */}
             {isExpanded && (
                 <div className="pl-14 pr-4 pb-4 space-y-4">
-                    <div className="flex items-center gap-x-2">
+                    <div className="flex items-center gap-x-2 ml-6">
                         <AccessTimeIcon fontSize="small" sx={{ color: '#2F80ED' }} />
                         <DatePicker
                             value={dueDate}
@@ -133,7 +133,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                     </div>
                     {editingField === 'description' && isExpanded ? (
                         <input
-                            className="bg-transparent border-b border-gray-400 text-[#828282] outline-none w-full text-sm mt-2"
+                            className="bg-transparent border-b border-gray-400 text-[#828282] outline-none w-full text-sm mt-2 ml-3"
                             value={editDescription}
                             onChange={e => setEditDescription(e.target.value)}
                             onBlur={saveEdit}
@@ -142,7 +142,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                         />
                     ) : (
                         <div
-                            className="text-[#828282] text-sm mt-2 cursor-pointer flex items-center gap-x-1"
+                            className="text-[#828282] text-sm mt-2 cursor-pointer flex items-center gap-x-1 ml-3"
                             onClick={() => setEditingField('description')}
                             tabIndex={0}
                         >
@@ -150,10 +150,13 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                             {task.description || 'No Description'}
                         </div>
                     )}
-                    <div className="flex items-center gap-x-2 bg-[#F8F9FB] rounded px-3 py-2 mt-2">
-                        <BookmarkIcon sx={{ color: '#2F80ED' }} />
+                    {/* Tagging UI - Mine */}
+                    <div className="flex items-center gap-x-2 bg-[#F8F9FB] rounded px-3 py-2 mt-2" style={{ alignItems: 'flex-start' }}>
+                        <button onClick={() => setTagDialogOpen(true)} className="focus:outline-none">
+                            <BookmarkIcon sx={{ color: (task.tags && task.tags.length > 0) ? '#2F80ED' : '#BDBDBD', marginTop: '2px' }} />
+                        </button>
                         <div className="flex gap-x-2 flex-wrap">
-                            {(task.tags ?? []).map(tagValue => {
+                            {(task.tags && task.tags.length > 0) && task.tags.map(tagValue => {
                                 const tag = TAG_OPTIONS.find(t => t.value === tagValue);
                                 if (!tag) return null;
                                 return (
@@ -166,14 +169,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                                     </button>
                                 );
                             })}
-                            {(task.tags ?? []).length === 0 && (
-                                <button
-                                    className="px-3 py-1 rounded font-medium text-sm border-none outline-none bg-[#EAF1FB] text-[#333]"
-                                    onClick={() => setTagDialogOpen(true)}
-                                >
-                                    + Add Tag
-                                </button>
-                            )}
                         </div>
                         <Dialog open={tagDialogOpen} onClose={() => setTagDialogOpen(false)}>
                             <div className="bg-white rounded shadow-lg p-4 min-w-[220px] border border-gray-200">
