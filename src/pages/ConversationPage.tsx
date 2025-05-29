@@ -149,9 +149,7 @@ const ConversationPage = () => {
     // Tampilan utama
     return (
         <div
-            className={`absolute top-0 left-0 w-full h-full bg-[#282c34] z-10 transition-transform duration-300 ease-in-out ${
-                isVisible ? 'translate-x-0' : 'translate-x-full'
-            }`}
+            className="absolute top-0 left-0 w-full h-full bg-white z-10 transition-transform duration-300 ease-in-out"
         >
             <div className="flex flex-col h-full">
                 <ChatHeader title={post?.subject || 'Conversation'} participantCount={liveComments.length + 1} />

@@ -21,7 +21,7 @@ const MessageInput = ({ onSend }: { onSend: (msg: string) => void }) => {
                 <input
                     type="text"
                     placeholder="Type a new message"
-                    className="w-full bg-[#3c4043] border border-gray-500 rounded-lg p-2 text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full bg-white border border-gray-300 rounded-lg p-2 text-[#4F4F4F] focus:outline-none focus:ring-1 focus:ring-blue-500"
                     value={value}
                     onChange={e => setValue(e.target.value)}
                     onKeyDown={handleKeyDown}
