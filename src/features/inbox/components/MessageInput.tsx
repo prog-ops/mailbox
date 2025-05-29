@@ -16,7 +16,7 @@ const MessageInput = ({ onSend }: { onSend: (msg: string) => void }) => {
         if (e.key === 'Enter') handleSend();
     };
     return (
-        <div className="p-4 border-t border-gray-700 flex-shrink-0">
+        <div className="p-4 flex-shrink-0 bg-white">
             <div className="flex items-center gap-x-2">
                 <input
                     type="text"

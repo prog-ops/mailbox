@@ -6,6 +6,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface TaskItemProps {
     task: TaskItemType;
@@ -52,7 +53,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                 <Checkbox
                     checked={task.completed}
                     onChange={(e) => onCheck(e.target.checked)}
-                    sx={{ color: 'white', '&.Mui-checked': { color: '#68D391' } }}
+                    sx={{ color: '#828282', '&.Mui-checked': { color: '#68D391' } }}
                 />
                 <div className="flex-grow">
                     {editingField === 'title' ? (
@@ -90,10 +91,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                     )}
                     <span>{dueDate.format('DD/MM/YYYY')}</span>
                     <IconButton size="small" onClick={onToggle}>
-                        <ExpandMoreIcon className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} sx={{color: 'white'}}/>
+                        <ExpandMoreIcon className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} sx={{color: '#828282'}}/>
                     </IconButton>
                     <IconButton size="small" onClick={handleMenuClick}>
-                        <MoreHorizIcon sx={{color: 'white'}} />
+                        <MoreHorizIcon sx={{color: '#828282'}} />
                     </IconButton>
                     <Menu anchorEl={anchorEl} open={openMenu} onClose={handleMenuClose} anchorOrigin={{vertical:'bottom',horizontal:'right'}} transformOrigin={{vertical:'top',horizontal:'right'}}>
                         <MenuItem onClick={handleDelete} sx={{ color: 'red' }}>Delete</MenuItem>
@@ -105,7 +106,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
             {isExpanded && (
                 <div className="pl-14 pr-4 pb-4 space-y-4">
                     <div className="flex items-center gap-x-2">
-                        <AccessTimeIcon fontSize="small" className="text-gray-400" />
+                        <AccessTimeIcon fontSize="small" sx={{ color: '#2F80ED' }} />
                         <DatePicker
                             value={dueDate}
                             onChange={(newDate) => setDueDate(newDate || dayjs())}
@@ -126,11 +127,12 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, isExpanded, onToggle, onCheck
                         />
                     ) : (
                         <div
-                            className="text-[#828282] text-sm mt-2 cursor-pointer"
+                            className="text-[#828282] text-sm mt-2 cursor-pointer flex items-center gap-x-1"
                             onClick={() => setEditingField('description')}
                             tabIndex={0}
                         >
                             {task.description || 'No Description'}
+                            <EditIcon fontSize="small" sx={{ color: '#2F80ED' }} />
                         </div>
                     )}
                 </div>
