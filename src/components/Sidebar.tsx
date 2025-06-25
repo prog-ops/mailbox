@@ -1,8 +1,7 @@
 const Sidebar = () => {
-    return (
-        <div className="w-[72px] bg-[#313338] border-r border-gray-700 flex-shrink-0">
-        </div>
-    );
+  return (
+    <div className="w-[72px] flex-shrink-0 border-gray-700 border-r bg-[#313338]"></div>
+  );
 };
 
 export default Sidebar;

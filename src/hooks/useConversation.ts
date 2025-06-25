@@ -1,5 +1,5 @@
-import type {CommentItem, InboxItem} from "../types/inbox.ts";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
+import type { CommentItem, InboxItem } from '../types/inbox.ts';
 
 const APP_ID = import.meta.env.VITE_DUMMYAPI_APP_ID
 
@@ -8,35 +8,40 @@ const APP_ID = import.meta.env.VITE_DUMMYAPI_APP_ID
  * @param postId
  */
 // Fungsi async untuk mengambil data, dipisahkan dari hook
-const fetchConversation = async (postId: string): Promise<{ post: InboxItem; comments: CommentItem[] }> => {
-    const [postRes, commentsRes] = await Promise.all([
-        fetch(`https://dummyapi.io/data/v1/post/${postId}`, { headers: { 'app-id': APP_ID } }),
-        fetch(`https://dummyapi.io/data/v1/post/${postId}/comment`, { headers: { 'app-id': APP_ID } })
-    ]);
+const fetchConversation = async (
+  postId: string
+): Promise<{ post: InboxItem; comments: CommentItem[] }> => {
+  const [postRes, commentsRes] = await Promise.all([
+    fetch(`https://dummyapi.io/data/v1/post/${postId}`, {
+      headers: { 'app-id': APP_ID },
+    }),
+    fetch(`https://dummyapi.io/data/v1/post/${postId}/comment`, {
+      headers: { 'app-id': APP_ID },
+    }),
+  ]);
 
-    if (!postRes.ok || !commentsRes.ok) {
-        throw new Error('Failed to fetch conversation');
-    }
+  if (!(postRes.ok && commentsRes.ok)) {
+    throw new Error('Failed to fetch conversation');
+  }
 
-    const postData = await postRes.json();
-    const commentsData = await commentsRes.json();
+  const postData = await postRes.json();
+  const commentsData = await commentsRes.json();
 
-    return { post: postData, comments: commentsData.data };
+  return { post: postData, comments: commentsData.data };
 };
 
-
 const useConversation = (postId: string | undefined) => {
-    return useQuery({
-        // 1. Query key dinamis: jika postId berubah, query akan dijalankan ulang
-        queryKey: ['conversation', postId],
+  return useQuery({
+    // 1. Query key dinamis: jika postId berubah, query akan dijalankan ulang
+    queryKey: ['conversation', postId],
 
-        // 2. Query function memanggil fungsi fetch kita
-        //    Tanda seru (!) aman digunakan karena ada opsi `enabled` di bawah
-        queryFn: () => fetchConversation(postId!),
+    // 2. Query function memanggil fungsi fetch kita
+    //    Tanda seru (!) aman digunakan karena ada opsi `enabled` di bawah
+    queryFn: () => fetchConversation(postId!),
 
-        // 3. Opsi `enabled`: query ini hanya akan berjalan jika `postId` ada (bukan undefined)
-        enabled: !!postId,
-    });
+    // 3. Opsi `enabled`: query ini hanya akan berjalan jika `postId` ada (bukan undefined)
+    enabled: !!postId,
+  });
 };
 
 export default useConversation;

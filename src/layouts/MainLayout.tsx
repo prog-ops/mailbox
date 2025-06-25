@@ -1,30 +1,28 @@
-import React from 'react';
-import Header from "../components/Header.tsx";
-import Sidebar from "../components/Sidebar.tsx";
-import FloatingActions from "../components/FloatingActions.tsx";
-import {useView} from "../context/ViewContext.tsx";
+import type React from 'react';
+import FloatingActions from '../components/FloatingActions.tsx';
+import Header from '../components/Header.tsx';
+import Sidebar from '../components/Sidebar.tsx';
+import { useView } from '../context/ViewContext.tsx';
 
 interface MainLayoutProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-    const { setView } = useView();
+  const { setView } = useView();
 
-    return (
-        <div className="bg-white h-screen w-screen flex flex-col overflow-hidden">
-            <Header />
-            <div className="flex flex-grow relative min-h-0">
-                <Sidebar />
-                <main className="flex-grow bg-white relative min-h-0">
-                    {children}
-                </main>
-                <FloatingActions
-                    onInboxClick={() => setView('inbox')}
-                    onTaskClick={() => setView('tasks')}
-                />
-            </div>
-        </div>
-    );
+  return (
+    <div className="flex h-screen w-screen flex-col overflow-hidden bg-white">
+      <Header />
+      <div className="relative flex min-h-0 flex-grow">
+        <Sidebar />
+        <main className="relative min-h-0 flex-grow bg-white">{children}</main>
+        <FloatingActions
+          onInboxClick={() => setView('inbox')}
+          onTaskClick={() => setView('tasks')}
+        />
+      </div>
+    </div>
+  );
 };
 export default MainLayout;

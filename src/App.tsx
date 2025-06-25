@@ -1,19 +1,19 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ViewProvider } from './context/ViewContext.tsx';
+import ConversationPage from './pages/ConversationPage.tsx';
 import InboxPage from './pages/InboxPage';
-import ConversationPage from "./pages/ConversationPage.tsx";
-import {ViewProvider} from "./context/ViewContext.tsx";
 
 const App = () => {
-    return (
-        <ViewProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<InboxPage/>}/>
-                    <Route path="/conversation/:postId" element={<ConversationPage/>}/>
-                </Routes>
-            </BrowserRouter>
-        </ViewProvider>
-    );
+  return (
+    <ViewProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<InboxPage />} path="/" />
+          <Route element={<ConversationPage />} path="/conversation/:postId" />
+        </Routes>
+      </BrowserRouter>
+    </ViewProvider>
+  );
 };
 
 export default App;
