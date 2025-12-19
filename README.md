@@ -1,54 +1,98 @@
-# React + TypeScript + Vite
+# 📧 Mailbox App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, fast, and elegant personal communication dashboard built with **React 19** and **Vite**. This application combines a seamless email-style inbox with a robust task management system, all wrapped in a premium, responsive interface inspired by modern design principles.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Key Features
 
-## Expanding the ESLint configuration
+### 📩 Smart Inbox
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Real-time Feel**: Smooth transitions between inbox lists and conversation threads.
+- **Dynamic Conversations**: Simulation of incoming messages and deep threading for a "live" chat experience.
+- **Rich Media**: Integrated avatars and clear typography for better readability.
+- **Searchable**: Easily filter through your messages.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### ✅ Integrated Task Management
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Task Organization**: Create, edit, and delete tasks with ease.
+- **Tagging System**: Categorize tasks using a beautiful, color-coded tag system (e.g., Important, Meetings, Client Related).
+- **Filtering**: Quickly toggle between "Personal Errands", "Urgent To Do", and "My Tasks".
+- **Visual Feedback**: Clear indicators for completed tasks and expanded task details.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 🚀 Premium User Experience
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- **Inter-view Navigation**: Seamlessly switch between Inbox and Tasks using a hover-triggered Floating Action Button (FAB).
+- **PWA Ready**: Installable on mobile and desktop devices with offline support.
+- **Responsive Layout**: Designed to feel native on all screen sizes, from mobile phones to high-res monitors.
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer                | Technology                                                          |
+| :------------------- | :------------------------------------------------------------------ |
+| **Core Framework**   | [React 19](https://react.dev/)                                      |
+| **Build Tool**       | [Vite 6](https://vitejs.dev/)                                       |
+| **Styling**          | [Tailwind CSS 4](https://tailwindcss.com/)                          |
+| **UI Components**    | [Material UI (MUI) 6](https://mui.com/)                             |
+| **State Management** | [TanStack Query (React Query) 5](https://tanstack.com/query/latest) |
+| **Routing**          | [React Router 7](https://reactrouter.com/)                          |
+| **Icons**            | [MUI Icons](https://mui.com/material-ui/material-icons/)            |
+| **Date Management**  | [date-fns](https://date-fns.org/) & [dayjs](https://day.js.org/)    |
+| **API Backend**      | [JSONPlaceholder](https://jsonplaceholder.typicode.com/)            |
+
+---
+
+## 🚦 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (Latest LTS recommended)
+- [npm](https://www.npmjs.com/) or [bun](https://bun.sh/)
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone <repository-url>
+   cd mailbox
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   # or
+   bun install
+   ```
+
+3. **Run the development server:**
+
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 📂 Project Structure
+
+- `src/api`: Centralized API client for clean data fetching.
+- `src/components`: Shared UI components (Sidebar, Header, Floating Actions).
+- `src/features`: Modular feature-based structure for Inbox and Task management.
+- `src/hooks`: Custom React hooks (React Query) for data synchronization.
+- `src/layouts`: Main application shell.
+- `src/pages`: Top-level routing components.
+- `src/context`: Global view state management.
+
+---
+
+## 📄 License
+
+MIT License. Feel free to use and modify for your own projects!
