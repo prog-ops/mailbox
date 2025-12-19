@@ -15,7 +15,7 @@ interface ViewContextType {
 const ViewContext = createContext<ViewContextType | undefined>(undefined);
 
 export const ViewProvider = ({ children }: { children: ReactNode }) => {
-  const [view, setView] = useState<View>('idle');
+  const [view, setView] = useState<View>('inbox');
   return (
     <ViewContext.Provider value={{ view, setView }}>
       {children}

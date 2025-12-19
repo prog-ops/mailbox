@@ -1,12 +1,11 @@
 import { Outlet } from 'react-router-dom';
-import FloatingActions from '../components/FloatingActions.tsx';
 import { useView } from '../context/ViewContext.tsx';
 import InboxContent from '../features/inbox/components/InboxContent.tsx';
 import TasksView from '../features/task/components/TasksView.tsx';
 import MainLayout from '../layouts/MainLayout.tsx';
 
 const InboxPage = () => {
-  const { view, setView } = useView();
+  const { view } = useView();
 
   return (
     <>
@@ -20,10 +19,6 @@ const InboxPage = () => {
         {/* Outlet akan merender ConversationPage saat URL cocok */}
         <Outlet />
       </MainLayout>
-      <FloatingActions
-        onInboxClick={() => setView('inbox')}
-        onTaskClick={() => setView('tasks')}
-      />
     </>
   );
 };

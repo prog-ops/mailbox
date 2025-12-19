@@ -1,45 +1,52 @@
 import { useQuery } from '@tanstack/react-query';
+import { fetchWithAuth } from '../api/client';
 import type { CommentItem, InboxItem } from '../types/inbox.ts';
 
-const APP_ID = import.meta.env.VITE_DUMMYAPI_APP_ID
-
-/**
- * Hook untuk mengambil detail percakapan (post dan komentar) berdasarkan postId
- * @param postId
- */
-// Fungsi async untuk mengambil data, dipisahkan dari hook
 const fetchConversation = async (
   postId: string
 ): Promise<{ post: InboxItem; comments: CommentItem[] }> => {
-  const [postRes, commentsRes] = await Promise.all([
-    fetch(`https://dummyapi.io/data/v1/post/${postId}`, {
-      headers: { 'app-id': APP_ID },
-    }),
-    fetch(`https://dummyapi.io/data/v1/post/${postId}/comment`, {
-      headers: { 'app-id': APP_ID },
-    }),
+  const [postData, commentsData, users] = await Promise.all([
+    fetchWithAuth(`/posts/${postId}`),
+    fetchWithAuth(`/comments?postId=${postId}`),
+    fetchWithAuth('/users')
   ]);
 
-  if (!(postRes.ok && commentsRes.ok)) {
-    throw new Error('Failed to fetch conversation');
-  }
+  const postUser = users.find((u: any) => u.id === postData.userId) || users[0];
+  const postUserNames = postUser.name.split(' ');
 
-  const postData = await postRes.json();
-  const commentsData = await commentsRes.json();
+  const post: InboxItem = {
+    id: postData.id.toString(),
+    text: postData.body,
+    publishDate: new Date().toISOString(),
+    subject: postData.title,
+    read: true,
+    owner: {
+      id: postUser.id.toString(),
+      firstName: postUserNames[0],
+      lastName: postUserNames.slice(1).join(' '),
+      picture: `https://i.pravatar.cc/150?u=${postUser.email}`,
+    }
+  };
 
-  return { post: postData, comments: commentsData.data };
+  const comments: CommentItem[] = commentsData.map((c: any, index: number) => ({
+    id: c.id.toString(),
+    message: c.body,
+    publishDate: new Date(Date.now() - (index + 1) * 600000).toISOString(),
+    owner: {
+      id: `c-user-${c.email}`,
+      firstName: c.name.split(' ')[0],
+      lastName: c.name.split(' ').slice(1).join(' '),
+      picture: `https://i.pravatar.cc/150?u=${c.email}`,
+    }
+  }));
+
+  return { post, comments };
 };
 
 const useConversation = (postId: string | undefined) => {
   return useQuery({
-    // 1. Query key dinamis: jika postId berubah, query akan dijalankan ulang
     queryKey: ['conversation', postId],
-
-    // 2. Query function memanggil fungsi fetch kita
-    //    Tanda seru (!) aman digunakan karena ada opsi `enabled` di bawah
     queryFn: () => fetchConversation(postId!),
-
-    // 3. Opsi `enabled`: query ini hanya akan berjalan jika `postId` ada (bukan undefined)
     enabled: !!postId,
   });
 };

@@ -149,7 +149,7 @@ const ConversationPage = () => {
   // Tampilan saat data masih dimuat oleh React Query
   if (isLoading) {
     return (
-      <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-[#282c34]">
+      <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-white">
         <CircularProgress />
       </div>
     );
@@ -158,7 +158,7 @@ const ConversationPage = () => {
   // Tampilan jika terjadi error
   if (isError) {
     return (
-      <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-[#282c34] text-red-500">
+      <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center bg-white text-red-500">
         Error: {error.message}
       </div>
     );

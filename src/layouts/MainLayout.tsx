@@ -1,4 +1,4 @@
-import type React from 'react';
+import { useNavigate } from 'react-router-dom';
 import FloatingActions from '../components/FloatingActions.tsx';
 import Header from '../components/Header.tsx';
 import Sidebar from '../components/Sidebar.tsx';
@@ -10,6 +10,17 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const { setView } = useView();
+  const navigate = useNavigate();
+
+  const handleInboxClick = () => {
+    setView('inbox');
+    navigate('/');
+  };
+
+  const handleTaskClick = () => {
+    setView('tasks');
+    navigate('/');
+  };
 
   return (
     <div className="flex h-screen w-screen flex-col overflow-hidden bg-white">
@@ -18,8 +29,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Sidebar />
         <main className="relative min-h-0 flex-grow bg-white">{children}</main>
         <FloatingActions
-          onInboxClick={() => setView('inbox')}
-          onTaskClick={() => setView('tasks')}
+          onInboxClick={handleInboxClick}
+          onTaskClick={handleTaskClick}
         />
       </div>
     </div>

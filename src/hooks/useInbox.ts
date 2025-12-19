@@ -1,20 +1,31 @@
 import { useQuery } from '@tanstack/react-query';
+import { fetchWithAuth } from '../api/client';
 import type { InboxItem } from '../types/inbox.ts';
 
-// Ganti dengan App ID Anda yang didapat dari dummyapi.io
-const APP_ID = import.meta.env.VITE_DUMMYAPI_APP_ID
-
 const fetchInboxItems = async () => {
-  const response = await fetch('https://dummyapi.io/data/v1/post?limit=20', {
-    headers: { 'app-id': APP_ID },
+  const [posts, users] = await Promise.all([
+    fetchWithAuth('/posts?_limit=20'),
+    fetchWithAuth('/users')
+  ]);
+  
+  return posts.map((post: any, index: number) => {
+    const user = users.find((u: any) => u.id === post.userId) || users[0];
+    const names = user.name.split(' ');
+    
+    return {
+      id: post.id.toString(),
+      text: post.body,
+      publishDate: new Date(Date.now() - index * 3600000).toISOString(),
+      subject: post.title,
+      read: index % 3 !== 0,
+      owner: {
+        id: user.id.toString(),
+        firstName: names[0],
+        lastName: names.slice(1).join(' '),
+        picture: `https://i.pravatar.cc/150?u=${user.email}`,
+      }
+    };
   });
-  if (!response.ok) throw new Error('Network response was not ok');
-  const { data } = await response.json();
-  return data.map((item: any, index: number) => ({
-    ...item,
-    subject: `Re: Project Update #${Math.floor(10_000 + Math.random() * 90_000)}`,
-    read: index % 3 !== 0,
-  }));
 };
 
 const useInbox = () => {
